@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true
+  }
+}
+//fichier inutile car BUN est utilisé, juste pour enlever les erreurs de l'IDE

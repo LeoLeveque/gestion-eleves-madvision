@@ -1,0 +1,78 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./madvision.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Eleve {
+  id            Int               @id @default(autoincrement())
+  nomPrenom     String
+  dateNaissance DateTime
+  telephone     String            @unique
+  adresse       String
+  dateEntree    DateTime
+  typeCours     String
+  filiereId     Int
+  filiere       Filiere           @relation(fields: [filiereId], references: [id])
+  recus         Recu[]
+  modules       EleveModule[]
+  fournitures   EleveFourniture[]
+}
+
+model Filiere {
+  id     Int     @id @default(autoincrement())
+  nom    String
+  eleves Eleve[]
+}
+
+model Recu {
+  id      Int      @id @default(autoincrement())
+  eleveId Int
+  montant Float
+  motif   String
+  date    DateTime @default(now())
+  eleve   Eleve    @relation(fields: [eleveId], references: [id])
+}
+
+model Module {
+  id     Int           @id @default(autoincrement())
+  nom    String
+  prix   Int           @default(0)
+  eleves EleveModule[]
+}
+
+model Fourniture {
+  id     Int               @id @default(autoincrement())
+  nom    String
+  prix   Int
+  eleves EleveFourniture[]
+}
+
+model EleveModule {
+  id       Int    @id @default(autoincrement())
+  eleveId  Int
+  moduleId Int
+  paye     Int    @default(0)
+  eleve    Eleve  @relation(fields: [eleveId], references: [id])
+  module   Module @relation(fields: [moduleId], references: [id])
+}
+
+model EleveFourniture {
+  id           Int        @id @default(autoincrement())
+  eleveId      Int
+  fournitureId Int
+  paye         Int        @default(0)
+  eleve        Eleve      @relation(fields: [eleveId], references: [id])
+  fourniture   Fourniture @relation(fields: [fournitureId], references: [id])
+}
+
+model Utilisateur {
+  id        Int     @id @default(autoincrement())
+  nomPrenom String  @unique
+  mdp       String
+  seed      String
+  isAdmin   Boolean
+}
