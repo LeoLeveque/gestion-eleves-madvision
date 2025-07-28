@@ -11,6 +11,8 @@
  *   get:
  *     tags: [Élèves]
  *     summary: Récupère la liste des élèves avec filtres, pagination, tri et somme due
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: query
  *         name: nomPrenom
@@ -84,6 +86,8 @@
  *   get:
  *     tags: [Élèves]
  *     summary: Récupère un élève complet avec ses relations
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -103,6 +107,8 @@
  *   post:
  *     tags: [Élèves]
  *     summary: Crée un nouvel élève avec ses modules, fournitures et reçus
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -159,6 +165,8 @@
  *   patch:
  *     tags: [Élèves]
  *     summary: Ajoute des relations à un élève existant (modules, fournitures, reçus)
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -197,6 +205,8 @@
  *   put:
  *     tags: [Élèves]
  *     summary: Met à jour un élève et ses relations
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -249,6 +259,8 @@
  *   delete:
  *     tags: [Élèves]
  *     summary: Supprime un élève et toutes ses relations
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id

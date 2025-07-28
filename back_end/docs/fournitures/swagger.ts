@@ -35,7 +35,7 @@
  *     summary: Récupérer toutes les fournitures.
  *     tags: [Fourniture]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Liste de toutes les fournitures.
@@ -52,7 +52,7 @@
  *     summary: Créer une nouvelle fourniture.
  *     tags: [Fourniture]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -79,7 +79,7 @@
  *     summary: Récupérer une fourniture par ID.
  *     tags: [Fourniture]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -102,7 +102,7 @@
  *     summary: Mettre à jour une fourniture.
  *     tags: [Fourniture]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -133,7 +133,7 @@
  *     summary: Supprimer une fourniture.
  *     tags: [Fourniture]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path

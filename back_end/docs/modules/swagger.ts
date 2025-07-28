@@ -27,7 +27,7 @@
  *     summary: Récupérer tous les modules.
  *     tags: [Module]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Liste de tous les modules.
@@ -44,7 +44,7 @@
  *     summary: Créer un nouveau module.
  *     tags: [Module]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -68,7 +68,7 @@
  *     summary: Récupérer un module par son ID.
  *     tags: [Module]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -92,7 +92,7 @@
  *     summary: Mettre à jour un module existant.
  *     tags: [Module]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -124,7 +124,7 @@
  *     summary: Supprimer un module.
  *     tags: [Module]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
