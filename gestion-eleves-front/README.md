@@ -67,3 +67,6 @@ export default tseslint.config([
   },
 ])
 ```
+
+## Environment variables
+Copy `.env.example` to `.env` and adjust `VITE_API_URL` to match your backend.
