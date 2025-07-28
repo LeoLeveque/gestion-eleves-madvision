@@ -42,7 +42,7 @@ const swaggerOptions = {
         },
         security: [{ BearerAuth: [] }],
     },
-    apis: ["docs/**/*.ts", "back_end/docs/**/*.ts"],
+    apis: ["back_end/docs/**/*.ts"],
 };
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);

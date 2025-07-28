@@ -30,7 +30,7 @@
  *     summary: Récupérer toutes les filières.
  *     tags: [Filiere]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Liste de toutes les filières.
@@ -47,7 +47,7 @@
  *     summary: Créer une nouvelle filière.
  *     tags: [Filiere]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -74,7 +74,7 @@
  *     summary: Récupérer une filière par son ID.
  *     tags: [Filiere]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -97,7 +97,7 @@
  *     summary: Mettre à jour une filière.
  *     tags: [Filiere]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -128,7 +128,7 @@
  *     summary: Supprimer une filière.
  *     tags: [Filiere]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path

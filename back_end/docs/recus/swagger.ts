@@ -11,6 +11,8 @@
  *   get:
  *     tags: [Recus]
  *     summary: Liste des reçus
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Liste des reçus
@@ -28,6 +30,8 @@
  *   post:
  *     tags: [Recus]
  *     summary: Créer un nouveau reçu
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -53,6 +57,8 @@
  *   get:
  *     tags: [Recus]
  *     summary: Détail d'un reçu
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -70,6 +76,8 @@
  *   put:
  *     tags: [Recus]
  *     summary: Modifier un reçu
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -98,6 +106,8 @@
  *   delete:
  *     tags: [Recus]
  *     summary: Supprimer un reçu
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id

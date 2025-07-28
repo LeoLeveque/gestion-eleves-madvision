@@ -11,6 +11,8 @@
  *   get:
  *     tags: [Statistiques]
  *     summary: Nombre d'élèves par filière
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Liste des filières avec nombre d'élèves
@@ -33,6 +35,8 @@
  *   get:
  *     tags: [Statistiques]
  *     summary: Montant total encaissé (somme des reçus)
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Montant total encaissé
@@ -49,6 +53,25 @@
 /**
  * @swagger
  * /stats/eleves-en-retard:
+ *   get:
+ *     tags: [Statistiques]
+ *     summary: Élèves ayant des paiements en retard
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Liste des élèves en retard de paiement
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   eleve:
+ *                     type: string
+ *                   montantRestant:
+ *                     type: number
  */
 
 /**
@@ -57,6 +80,8 @@
  *   get:
  *     tags: [Statistiques]
  *     summary: Modules les plus suivis (triés par nombre d'élèves)
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Liste des modules avec nombre d'élèves inscrits
