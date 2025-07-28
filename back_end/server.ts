@@ -10,8 +10,12 @@ import fournituresRoutes from "./routes/fournitures";
 import recusRoutes from "./routes/recus";
 import filieresRoutes from "./routes/filieres";
 import statsRoutes from "./routes/stats";
+import eleveFournitureRoutes from "./routes/eleveFourniture";
+import eleveModuleRoutes from "./routes/eleveModule";
+import importExportRoutes from "./routes/exportmport"
 import cors from "cors";
 import { verifyToken } from "./routes/auth/service";
+
 
 const app = express();
 
@@ -53,6 +57,9 @@ app.use("/modules", verifyToken, modulesRoutes);
 app.use("/fournitures", verifyToken, fournituresRoutes);
 app.use("/recus", verifyToken, recusRoutes);
 app.use("/filieres", verifyToken, filieresRoutes);
+app.use("/eleve-fournitures", verifyToken, eleveFournitureRoutes);
+app.use("/eleve-modules", verifyToken, eleveModuleRoutes);
+app.use("/export-import", verifyToken, importExportRoutes);
 
 
 const PORT = 3000;

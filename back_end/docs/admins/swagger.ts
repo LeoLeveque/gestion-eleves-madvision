@@ -84,7 +84,7 @@
 /**
  * @swagger
  * /admins/{id}:
- *   patch:
+ *   put:
  *     tags: [Admins]
  *     summary: Modification d'un administrateur
  *     security:

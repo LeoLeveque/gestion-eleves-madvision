@@ -1,0 +1,131 @@
+{
+  "pages": {
+    "login": {
+      "title": "Connexion à votre compte",
+      "signin": "Se connecter",
+      "signup": "Créer un compte",
+      "divider": "ou",
+      "fields": {
+        "email": "Email",
+        "password": "Mot de passe"
+      },
+      "errors": {
+        "validEmail": "Adresse email invalide",
+        "requiredEmail": "L'email est requis",
+        "requiredPassword": "Le mot de passe est requis"
+      },
+      "buttons": {
+        "submit": "Connexion",
+        "forgotPassword": "Mot de passe oublié ?",
+        "noAccount": "Pas encore de compte ?",
+        "rememberMe": "Se souvenir de moi"
+      }
+    },
+    "forgotPassword": {
+      "title": "Mot de passe oublié ?",
+      "fields": {
+        "email": "Email"
+      },
+      "errors": {
+        "validEmail": "Adresse email invalide",
+        "requiredEmail": "L'email est requis"
+      },
+      "buttons": {
+        "submit": "Envoyer les instructions"
+      }
+    },
+    "register": {
+      "title": "Créer un compte",
+      "fields": {
+        "email": "Email",
+        "password": "Mot de passe"
+      },
+      "errors": {
+        "validEmail": "Adresse email invalide",
+        "requiredEmail": "L'email est requis",
+        "requiredPassword": "Le mot de passe est requis"
+      },
+      "buttons": {
+        "submit": "S'inscrire",
+        "haveAccount": "Vous avez déjà un compte ?"
+      }
+    },
+    "updatePassword": {
+      "title": "Nouveau mot de passe",
+      "fields": {
+        "password": "Nouveau mot de passe",
+        "confirmPassword": "Confirmer le mot de passe"
+      },
+      "errors": {
+        "confirmPasswordNotMatch": "Les mots de passe ne correspondent pas",
+        "requiredPassword": "Le mot de passe est requis",
+        "requiredConfirmPassword": "La confirmation est requise"
+      },
+      "buttons": {
+        "submit": "Mettre à jour"
+      }
+    },
+    "error": {
+      "info": "Il se peut que vous ayez oublié d'ajouter le composant {{action}} à la ressource {{resource}}.",
+      "404": "Désolé, cette page n'existe pas.",
+      "resource404": "Avez-vous bien créé la ressource {{resource}} ?",
+      "backHome": "Retour à l'accueil"
+    }
+  },
+  "actions": {
+    "list": "Liste",
+    "create": "Créer",
+    "edit": "Modifier",
+    "show": "Afficher"
+  },
+  "buttons": {
+    "create": "Créer",
+    "save": "Enregistrer",
+    "logout": "Se déconnecter",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "cancel": "Annuler",
+    "confirm": "Êtes-vous sûr ?",
+    "filter": "Filtrer",
+    "clear": "Réinitialiser",
+    "refresh": "Rafraîchir",
+    "show": "Afficher",
+    "undo": "Annuler",
+    "import": "Importer",
+    "clone": "Cloner",
+    "notAccessTitle": "Vous n'avez pas la permission d'accéder"
+  },
+  "warnWhenUnsavedChanges": "Voulez-vous vraiment quitter ? Vous avez des modifications non enregistrées.",
+  "notifications": {
+    "success": "Succès",
+    "error": "Erreur (code : {{statusCode}})",
+    "undoable": "Vous avez {{seconds}} secondes pour annuler",
+    "createSuccess": "{{resource}} créé avec succès",
+    "createError": "Erreur lors de la création de {{resource}} (code : {{statusCode}})",
+    "deleteSuccess": "{{resource}} supprimé avec succès",
+    "deleteError": "Erreur lors de la suppression de {{resource}} (code : {{statusCode}})",
+    "editSuccess": "{{resource}} modifié avec succès",
+    "editError": "Erreur lors de la modification de {{resource}} (code : {{statusCode}})",
+    "importProgress": "Importation : {{processed}} / {{total}}"
+  },
+  "loading": "Chargement...",
+  "tags": {
+    "clone": "Cloner"
+  },
+  "dashboard": {
+    "title": "Tableau de bord"
+  },
+  "table": {
+    "actions": "Actions"
+  },
+  "documentTitle": {
+    "default": "Madvision",
+    "suffix": " | Madvision"
+  },
+  "autoSave": {
+    "success": "Enregistré",
+    "error": "Erreur lors de l'enregistrement automatique",
+    "loading": "Enregistrement...",
+    "idle": "En attente de modifications"
+  }
+}

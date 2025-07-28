@@ -9,7 +9,7 @@ generator client {
 
 model Eleve {
   id            Int               @id @default(autoincrement())
-  nomPrenom     String
+  nomPrenom     String            @unique
   dateNaissance DateTime
   telephone     String            @unique
   adresse       String
@@ -24,12 +24,13 @@ model Eleve {
 
 model Filiere {
   id     Int     @id @default(autoincrement())
-  nom    String
+  nom    String  @unique
   eleves Eleve[]
 }
 
 model Recu {
   id      Int      @id @default(autoincrement())
+  numero  Int
   eleveId Int
   montant Float
   motif   String
@@ -39,14 +40,14 @@ model Recu {
 
 model Module {
   id     Int           @id @default(autoincrement())
-  nom    String
+  nom    String        @unique
   prix   Int           @default(0)
   eleves EleveModule[]
 }
 
 model Fourniture {
   id     Int               @id @default(autoincrement())
-  nom    String
+  nom    String            @unique
   prix   Int
   eleves EleveFourniture[]
 }

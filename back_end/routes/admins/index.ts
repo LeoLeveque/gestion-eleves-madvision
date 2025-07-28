@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router, Response } from "express";
 import bcrypt from "bcrypt";
 import { db } from "../../db.js";
 import {AuthenticatedRequest} from "../auth";
@@ -9,7 +9,6 @@ const router = Router();
 router.get("/", checkSuperAdmin, async (req: AuthenticatedRequest, res: Response) => {
     try {
         const admins = await db.utilisateur.findMany({
-            where: { isAdmin: true },
             select: {
                 id: true,
                 nomPrenom: true,
@@ -22,17 +21,17 @@ router.get("/", checkSuperAdmin, async (req: AuthenticatedRequest, res: Response
         const result = admins.map(admin => ({
             ...admin,
         }));
-
-        res.json(result);
+        res.json({ data: result, total: result.length });
     } catch (error) {
         res.status(500).json({ error: "Erreur serveur" });
     }
 });
 
 router.post("/", checkSuperAdmin, async (req: AuthenticatedRequest, res: Response) => {
-    const { nomPrenom, mdp } = req.body;
+    console.log(req.body)
+    const { nomPrenom, mdp, isAdmin } = req.body;
     if (!nomPrenom || !mdp) {
-        res.status(400).json({ error: "nomPrenom et mdp sont requis" });
+        res.status(400).json({ error: "nomPrenom, mdp et type d'administrateur sont requis" });
         return;
     }
 
@@ -51,7 +50,7 @@ router.post("/", checkSuperAdmin, async (req: AuthenticatedRequest, res: Respons
                 nomPrenom,
                 mdp: hashed,
                 seed,
-                isAdmin: true,
+                isAdmin: isAdmin,
             },
             select: {
                 id: true,
@@ -69,7 +68,35 @@ router.post("/", checkSuperAdmin, async (req: AuthenticatedRequest, res: Respons
     }
 });
 
-router.patch("/:id", checkAdminOrOwner, async (req: AuthenticatedRequest, res: Response) => {
+router.delete("/:id", checkSuperAdmin, async (req: AuthenticatedRequest, res: Response) => {
+    const id = Number(req.params.id);
+    console.log(req.user.id);
+    if(id == req.user.id){
+        res.status(400).json({ error: "Auto suppression impossible" });
+        return
+    }
+    if(id == 1){
+        res.status(400).json({ error: "impossible de supprimer le premier utilisateur" });
+        return
+    }
+
+    try {
+        const adminToDelete = await db.utilisateur.findUnique({ where: { id } });
+        if (!adminToDelete) {
+            res.status(404).json({ error: "Admin non trouvé" });
+            return;
+        }
+
+        await db.utilisateur.delete({ where: { id } });
+        res.json({ message: "Admin supprimé" });
+        return;
+    } catch (error) {
+        res.status(500).json({ error: "Erreur serveur" });
+        return;
+    }
+});
+
+router.put("/:id", checkAdminOrOwner, async (req: AuthenticatedRequest, res: Response) => {
     const idToUpdate = Number(req.params.id);
     const { nomPrenom, mdp } = req.body;
 
@@ -128,22 +155,4 @@ router.patch("/:id", checkAdminOrOwner, async (req: AuthenticatedRequest, res: R
     }
 });
 
-router.delete("/:id", checkSuperAdmin, async (req: Request, res: Response) => {
-    const id = Number(req.params.id);
-
-    try {
-        const adminToDelete = await db.utilisateur.findUnique({ where: { id } });
-        if (!adminToDelete) {
-            res.status(404).json({ error: "Admin non trouvé" });
-            return;
-        }
-
-        await db.utilisateur.delete({ where: { id } });
-        res.json({ message: "Admin supprimé" });
-        return;
-    } catch (error) {
-        res.status(500).json({ error: "Erreur serveur" });
-        return;
-    }
-});
 export default router;

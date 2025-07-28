@@ -8,7 +8,10 @@ const filiereRouter = Router();
 filiereRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filieres = await prisma.filiere.findMany();
-        res.json(filieres);
+        res.json({
+            data: filieres,
+            total: filieres.length,
+        });
     } catch (error) {
         next(error);
     }

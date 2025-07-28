@@ -8,7 +8,10 @@ const fournitureRouter = Router();
 fournitureRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const fournitures = await prisma.fourniture.findMany();
-        res.json(fournitures);
+        res.json({
+            data: fournitures,
+            total: fournitures.length,
+        });
     } catch (error) {
         next(error);
     }

@@ -5,10 +5,13 @@ const prisma = new PrismaClient();
 const moduleRouter = Router();
 
 // GET /modules - Get all modules
-moduleRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
+moduleRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const modules = await prisma.module.findMany();
-        res.json(modules);
+        res.json({
+            data: modules,
+            total: modules.length,
+        });
     } catch (error) {
         next(error);
     }
@@ -36,12 +39,14 @@ moduleRouter.get('/:id', async (req: Request, res: Response, next: NextFunction)
 // POST /modules - Create a new module
 moduleRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { nom, filiereId } = req.body;
-        if (!nom || !filiereId) {
+        const { nom, prix } = req.body;
+        if (!nom || prix === undefined) {
             res.status(400).json({ message: 'Paramètres invalides' });
             return;
         }
-        const newModule = await prisma.module.create({ data: { nom } });
+        const newModule = await prisma.module.create({
+            data: { nom, prix: Number(prix) },
+        });
         res.status(201).json(newModule);
     } catch (error) {
         next(error);
@@ -56,14 +61,14 @@ moduleRouter.put('/:id', async (req: Request, res: Response, next: NextFunction)
             res.status(400).json({ message: 'ID invalide' });
             return;
         }
-        const { nom, filiereId } = req.body;
-        if (!nom || !filiereId) {
+        const { nom, prix } = req.body;
+        if (!nom || prix === undefined) {
             res.status(400).json({ message: 'Paramètres invalides' });
             return;
         }
         const updatedModule = await prisma.module.update({
             where: { id },
-            data: { nom }
+            data: { nom, prix: Number(prix) },
         });
         res.json(updatedModule);
     } catch (error: any) {

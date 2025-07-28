@@ -8,9 +8,11 @@ async function main() {
 
     await prisma.$transaction([
         prisma.eleveModule.deleteMany(),
+        prisma.eleveFourniture.deleteMany(),
         prisma.recu.deleteMany(),
         prisma.eleve.deleteMany(),
         prisma.module.deleteMany(),
+        prisma.fourniture.deleteMany(),
         prisma.filiere.deleteMany(),
         prisma.utilisateur.deleteMany(),
     ]);
@@ -63,7 +65,7 @@ async function main() {
                 typeCours: 'présentiel',
                 filiereId: filiereInfo.id,
                 recus: {
-                    create: [{ montant: 300.0, motif: 'Inscription', date: new Date('2023-09-02') }],
+                    create: [{ montant: 300.0, numero: 5, motif: 'Inscription', date: new Date('2023-09-02') }],
                 },
                 modules: {
                     create: [
@@ -83,7 +85,7 @@ async function main() {
                 typeCours: 'en ligne',
                 filiereId: filiereMaths.id,
                 recus: {
-                    create: [{ montant: 250.0, motif: 'Frais de cours', date: new Date('2023-09-10') }],
+                    create: [{ montant: 250.0, numero: 8, motif: 'Frais de cours', date: new Date('2023-09-10') }],
                 },
                 modules: {
                     create: [{ moduleId: moduleAlgo.id }],
@@ -100,7 +102,7 @@ async function main() {
                 typeCours: 'présentiel',
                 filiereId: filiereInfo.id,
                 recus: {
-                    create: [{ montant: 200.0, motif: 'Frais de dossier', date: new Date('2023-09-05') }],
+                    create: [{ montant: 200.0, numero: 7, motif: 'Frais de dossier', date: new Date('2023-09-05') }],
                 },
                 modules: {
                     create: [{ moduleId: moduleWeb.id }],

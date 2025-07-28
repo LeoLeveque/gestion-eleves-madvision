@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { db } from "../../db.js";
 import { Prisma } from "@prisma/client";
-import { getEleveComplet, ajouterFournitures, ajouterModules, ajouterRecus, supprimerRelationsEleve, mettreAJourRelationsEleve } from "./service";
+import { getEleveComplet, ajouterFournitures, ajouterModules, ajouterRecus, supprimerRelationsEleve } from "./service";
 
 
 const router = Router();
@@ -180,9 +180,6 @@ router.put("/:id", async (req: Request, res: Response) => {
         dateEntree,
         typeCours,
         filiereId,
-        modules = [],
-        fournitures = [],
-        recuIds = []
     } = req.body;
 
     try {
@@ -199,7 +196,7 @@ router.put("/:id", async (req: Request, res: Response) => {
             },
         });
 
-        await mettreAJourRelationsEleve(id, modules, fournitures, recuIds);
+        //await mettreAJourRelationsEleve(id, modules, fournitures, recuIds);
 
         const updated = await getEleveComplet(id);
         res.json(updated);

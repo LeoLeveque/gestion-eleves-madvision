@@ -49,7 +49,6 @@ export const findUserByNomPrenom = async (nomPrenom: string) => {
         where: { nomPrenom },
     });
 };
-
 export const verifyToken = (
     req: AuthenticatedRequest,
     res: Response,
