@@ -1,13 +1,11 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { db } from "../../db";
 const filiereRouter = Router();
 
 // GET /filieres - Get all filieres
 filiereRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const filieres = await prisma.filiere.findMany();
+        const filieres = await db.filiere.findMany();
         res.json({
             data: filieres,
             total: filieres.length,
@@ -25,7 +23,7 @@ filiereRouter.get('/:id', async (req: Request, res: Response, next: NextFunction
             res.status(400).json({ message: 'ID invalide' });
             return;
         }
-        const filiere = await prisma.filiere.findUnique({ where: { id } });
+        const filiere = await db.filiere.findUnique({ where: { id } });
         if (!filiere) {
             res.status(404).json({ message: 'Filiere introuvable' });
             return;
@@ -44,7 +42,7 @@ filiereRouter.post('/', async (req: Request, res: Response, next: NextFunction) 
             res.status(400).json({ message: 'Paramètres invalides' });
             return;
         }
-        const newFiliere = await prisma.filiere.create({ data: { nom } });
+        const newFiliere = await db.filiere.create({ data: { nom } });
         res.status(201).json(newFiliere);
     } catch (error) {
         next(error);
@@ -64,7 +62,7 @@ filiereRouter.put('/:id', async (req: Request, res: Response, next: NextFunction
             res.status(400).json({ message: 'Paramètres invalides' });
             return;
         }
-        const updatedFiliere = await prisma.filiere.update({
+        const updatedFiliere = await db.filiere.update({
             where: { id },
             data: { nom }
         });
@@ -86,7 +84,7 @@ filiereRouter.delete('/:id', async (req: Request, res: Response, next: NextFunct
             res.status(400).json({ message: 'ID invalide' });
             return;
         }
-        await prisma.filiere.delete({ where: { id } });
+        await db.filiere.delete({ where: { id } });
         res.sendStatus(204);
     } catch (error: any) {
         if (error.code === 'P2025') {

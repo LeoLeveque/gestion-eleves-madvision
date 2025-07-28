@@ -1,13 +1,11 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { db } from "../../db";
 const fournitureRouter = Router();
 
 // GET /fournitures - Get all fournitures
 fournitureRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const fournitures = await prisma.fourniture.findMany();
+        const fournitures = await db.fourniture.findMany();
         res.json({
             data: fournitures,
             total: fournitures.length,
@@ -25,7 +23,7 @@ fournitureRouter.get('/:id', async (req: Request, res: Response, next: NextFunct
             res.status(400).json({ message: 'ID invalide' });
             return;
         }
-        const fourniture = await prisma.fourniture.findUnique({ where: { id } });
+        const fourniture = await db.fourniture.findUnique({ where: { id } });
         if (!fourniture) {
             res.status(404).json({ message: 'Fourniture introuvable' });
             return;
@@ -44,7 +42,7 @@ fournitureRouter.post('/', async (req: Request, res: Response, next: NextFunctio
             res.status(400).json({ message: 'Paramètres invalides' });
             return;
         }
-        const newFourniture = await prisma.fourniture.create({ data: { nom, prix } });
+        const newFourniture = await db.fourniture.create({ data: { nom, prix } });
         res.status(201).json(newFourniture);
     } catch (error) {
         next(error);
@@ -64,7 +62,7 @@ fournitureRouter.put('/:id', async (req: Request, res: Response, next: NextFunct
             res.status(400).json({ message: 'Paramètres invalides' });
             return;
         }
-        const updatedFourniture = await prisma.fourniture.update({
+        const updatedFourniture = await db.fourniture.update({
             where: { id },
             data: { nom, prix }
         });
@@ -86,7 +84,7 @@ fournitureRouter.delete('/:id', async (req: Request, res: Response, next: NextFu
             res.status(400).json({ message: 'ID invalide' });
             return;
         }
-        await prisma.fourniture.delete({ where: { id } });
+        await db.fourniture.delete({ where: { id } });
         res.sendStatus(204);
     } catch (error: any) {
         if (error.code === 'P2025') {

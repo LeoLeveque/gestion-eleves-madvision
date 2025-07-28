@@ -1,13 +1,11 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { db } from "../../db";
 const moduleRouter = Router();
 
 // GET /modules - Get all modules
 moduleRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const modules = await prisma.module.findMany();
+        const modules = await db.module.findMany();
         res.json({
             data: modules,
             total: modules.length,
@@ -25,7 +23,7 @@ moduleRouter.get('/:id', async (req: Request, res: Response, next: NextFunction)
             res.status(400).json({ message: 'ID invalide' });
             return;
         }
-        const moduleItem = await prisma.module.findUnique({ where: { id } });
+        const moduleItem = await db.module.findUnique({ where: { id } });
         if (!moduleItem) {
             res.status(404).json({ message: 'Module introuvable' });
             return;
@@ -44,7 +42,7 @@ moduleRouter.post('/', async (req: Request, res: Response, next: NextFunction) =
             res.status(400).json({ message: 'Paramètres invalides' });
             return;
         }
-        const newModule = await prisma.module.create({
+        const newModule = await db.module.create({
             data: { nom, prix: Number(prix) },
         });
         res.status(201).json(newModule);
@@ -66,7 +64,7 @@ moduleRouter.put('/:id', async (req: Request, res: Response, next: NextFunction)
             res.status(400).json({ message: 'Paramètres invalides' });
             return;
         }
-        const updatedModule = await prisma.module.update({
+        const updatedModule = await db.module.update({
             where: { id },
             data: { nom, prix: Number(prix) },
         });
@@ -88,7 +86,7 @@ moduleRouter.delete('/:id', async (req: Request, res: Response, next: NextFuncti
             res.status(400).json({ message: 'ID invalide' });
             return;
         }
-        await prisma.module.delete({ where: { id } });
+        await db.module.delete({ where: { id } });
         res.sendStatus(204);
     } catch (error: any) {
         if (error.code === 'P2025') {
