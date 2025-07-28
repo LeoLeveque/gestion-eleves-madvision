@@ -2,7 +2,12 @@ import type { DataProvider } from "@refinedev/core";
 
 import axios from "axios";
 
-export const API_URL = "http://localhost:3000";
+/**
+ * Base URL of the backend API.
+ * Can be configured via the `VITE_API_URL` environment variable.
+ */
+export const API_URL =
+    (import.meta.env.VITE_API_URL as string | undefined) ?? "http://localhost:3000";
 const axiosInstance = axios.create({
     baseURL: API_URL,
 });

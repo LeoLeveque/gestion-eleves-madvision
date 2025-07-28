@@ -11,4 +11,5 @@ bun install
 bun run dev
 ```
 
-The app will be available at `http://localhost:5173/` by default.
+## Environment variables
+Copy `.env.example` to `.env` and adjust `VITE_API_URL` to match your backend.
