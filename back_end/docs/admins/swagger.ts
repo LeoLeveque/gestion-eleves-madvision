@@ -104,9 +104,6 @@
  *           schema:
  *             type: object
  *             properties:
- *               nomPrenom:
- *                 type: string
- *                 example: "Alice Martin"
  *               mdp:
  *                 type: string
  *                 format: password

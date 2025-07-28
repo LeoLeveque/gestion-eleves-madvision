@@ -28,7 +28,6 @@ router.get("/", checkSuperAdmin, async (req: AuthenticatedRequest, res: Response
 });
 
 router.post("/", checkSuperAdmin, async (req: AuthenticatedRequest, res: Response) => {
-    console.log(req.body)
     const { nomPrenom, mdp, isAdmin } = req.body;
     if (!nomPrenom || !mdp) {
         res.status(400).json({ error: "nomPrenom, mdp et type d'administrateur sont requis" });
@@ -70,7 +69,6 @@ router.post("/", checkSuperAdmin, async (req: AuthenticatedRequest, res: Respons
 
 router.delete("/:id", checkSuperAdmin, async (req: AuthenticatedRequest, res: Response) => {
     const id = Number(req.params.id);
-    console.log(req.user.id);
     if(id == req.user.id){
         res.status(400).json({ error: "Auto suppression impossible" });
         return
@@ -98,8 +96,7 @@ router.delete("/:id", checkSuperAdmin, async (req: AuthenticatedRequest, res: Re
 
 router.put("/:id", checkAdminOrOwner, async (req: AuthenticatedRequest, res: Response) => {
     const idToUpdate = Number(req.params.id);
-    const { nomPrenom, mdp } = req.body;
-
+    const { mdp } = req.body;
     if (isNaN(idToUpdate)) {
         res.status(400).json({ error: "ID invalide" });
         return;
@@ -108,8 +105,8 @@ router.put("/:id", checkAdminOrOwner, async (req: AuthenticatedRequest, res: Res
     try {
         const adminToUpdate = await db.utilisateur.findUnique({ where: { id: idToUpdate } });
 
-        if (!adminToUpdate || !adminToUpdate.isAdmin) {
-            res.status(404).json({ error: "Administrateur non trouvé" });
+        if (!adminToUpdate) {
+            res.status(404).json({ error: "Utilisateur non trouvé" });
             return
         }
 
@@ -118,17 +115,10 @@ router.put("/:id", checkAdminOrOwner, async (req: AuthenticatedRequest, res: Res
                 res.status(403).json({ error: "Modification interdite" });
                 return
             }
-            if (nomPrenom && nomPrenom !== adminToUpdate.nomPrenom) {
-                res.status(403).json({ error: "Admin classique ne peut modifier que son mot de passe" });
-                return
-            }
         }
 
         const dataToUpdate: { nomPrenom?: string; mdp?: string } = {};
 
-        if (nomPrenom) {
-            dataToUpdate.nomPrenom = nomPrenom;
-        }
 
         if (mdp) {
             const seed = adminToUpdate.seed;

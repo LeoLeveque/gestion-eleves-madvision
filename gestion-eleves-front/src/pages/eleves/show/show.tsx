@@ -27,7 +27,7 @@ export const ElevesShow = () => {
             title="Détails de l'élève"
             headerButtons={() => (
                 <>
-                    <DeleteButton onSuccess={() => go({ to: "/eleves", type: "replace" })} />
+                    <DeleteButton hideText onSuccess={() => go({ to: "/eleves", type: "replace" })} />
                     <Button onClick={handlePrint}>Imprimer</Button>
                     <ListButton />
                 </>

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Form, Input, Button, Card } from "antd";
+import {API_URL} from "../../dataProvider";
 
 export const LoginPage = () => {
     const navigate = useNavigate();
@@ -9,7 +10,7 @@ export const LoginPage = () => {
     const onFinish = async (values: { nomPrenom: string; mdp: string }) => {
         setLoading(true);
         try {
-            const res = await fetch("http://localhost:3000/auth/login", {
+            const res = await fetch(API_URL + "/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(values),

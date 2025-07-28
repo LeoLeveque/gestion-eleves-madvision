@@ -1,14 +1,24 @@
 import {Typography, Space, Button, Card} from "antd";
 import {useGo, useLogout} from "@refinedev/core";
 import { UserOutlined } from "@ant-design/icons";
+import { useGetIdentity } from "@refinedev/core";
+import type { UserIdentity } from "../authProvider";
+
 
 const { Title } = Typography;
 
 export const Home = () => {
 
+
+
     const { mutate: logout } = useLogout();
 
     const go = useGo();
+
+    const { data, isLoading } = useGetIdentity();
+    const user = data as UserIdentity | undefined;
+
+    if (isLoading) return null;
 
     return (
         <div style={{ padding: 32, position: "relative" }}>
@@ -65,13 +75,15 @@ export const Home = () => {
                     Gérer les filières existantes.
                 </Card>
 
-                <Card
-                    hoverable
-                    title="Liste des utilisateurs"
-                    onClick={() => go({ to: "/utilisateurs", type: "push" })}
-                >
-                    Gérer les utilisateurs.
-                </Card>
+                {user?.isAdmin && (
+                    <Card
+                        hoverable
+                        title="Liste des utilisateurs"
+                        onClick={() => go({ to: "/utilisateurs", type: "push" })}
+                    >
+                        Gérer les utilisateurs.
+                    </Card>
+                )}
             </Space>
         </div>
     );

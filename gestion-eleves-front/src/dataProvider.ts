@@ -47,8 +47,6 @@ export const dataProvider: DataProvider = {
         const response = await axiosInstance.get(`/${resource}`, {
             params: query,
         });
-        console.log("Requête GET LIST pour :", resource);
-        console.log(response.data);
         return {
             data: response.data.data,
             total: response.data.total,
@@ -72,7 +70,6 @@ export const dataProvider: DataProvider = {
     },
 
     deleteOne: async ({ resource, id }) => {
-        console.log(`/${resource}/${id}`);
         const response = await axiosInstance.delete(`/${resource}/${id}`);
         return { data: response.data };
     },

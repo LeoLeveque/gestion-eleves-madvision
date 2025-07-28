@@ -56,3 +56,9 @@ export const authProvider = {
     },
 
 };
+
+export type UserIdentity = {
+    id: number;
+    nomPrenom: string;
+    isAdmin: boolean;
+};

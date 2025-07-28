@@ -18,6 +18,7 @@ import {UtilisateursPage} from "./pages/utilisateurs/list";
 import { Home } from "./pages/Home";
 
 import { Profil } from "./pages/profil/profil";
+import {AdminOnly} from "./components/adminOnly";
 
 export default function App() {
     const { t, i18n } = useTranslation();
@@ -89,7 +90,14 @@ export default function App() {
                         <Route path="/fournitures" element={<FournituresList />} />
                         <Route path="/filieres" element={<FilieresList />} />
                         <Route path="/profil" element={<Profil />} />
-                        <Route path="/utilisateurs" element={<UtilisateursPage />} />
+                        <Route
+                            path="/utilisateurs"
+                            element={
+                                <AdminOnly>
+                                    <UtilisateursPage />
+                                </AdminOnly>
+                            }
+                        />
                     </Route>
 
                     <Route path="/login" element={<LoginPage />} />

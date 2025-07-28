@@ -23,7 +23,6 @@ export const UtilisateursPage = () => {
 
     const { tableProps } = useTable({ resource: "admins" });
 
-    console.log(tableProps)
     const { mutate: createUser, isLoading: creating } = useCreate();
     const { mutate: deleteUser } = useDelete();
 

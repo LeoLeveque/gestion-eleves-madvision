@@ -17,7 +17,7 @@ import cors from "cors";
 import { verifyToken } from "./routes/auth/service";
 
 
-const app = express();
+export const app = express();
 
 app.use(cors());
 app.use(express.json());
@@ -62,7 +62,9 @@ app.use("/eleve-modules", verifyToken, eleveModuleRoutes);
 app.use("/export-import", verifyToken, importExportRoutes);
 
 
+/*
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`✅ Serveur lancé sur http://localhost:${PORT}`);
 });
+*/

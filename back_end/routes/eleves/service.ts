@@ -16,11 +16,12 @@ export async function ajouterFournitures(eleveId: number, fournitures: { fournit
     }
 }
 
-export async function ajouterRecus(eleveId: number, recus: { montant: number, motif: string, date?: string }[]) {
-    for (const { montant, motif, date } of recus) {
+export async function ajouterRecus(eleveId: number, recus: { numero: number, montant: number, motif: string, date?: string }[]) {
+    for (const { numero, montant, motif, date } of recus) {
         await db.recu.create({
             data: {
                 eleveId,
+                numero,
                 montant,
                 motif,
                 date: date ? new Date(date) : undefined,

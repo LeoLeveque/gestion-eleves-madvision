@@ -23,6 +23,7 @@ export function checkSuperAdmin(req: AuthenticatedRequest, res: Response, next: 
     }
 }
 export function checkAdminOrOwner(req: AuthenticatedRequest, res: Response, next: NextFunction): void {
+
     const user = req.user;
     const targetId = Number(req.params.id);
 
@@ -36,7 +37,7 @@ export function checkAdminOrOwner(req: AuthenticatedRequest, res: Response, next
         return;
     }
 
-    if (user.isAdmin && user.id === targetId) {
+    if (user.isAdmin || user.id === targetId) {
         next();
         return;
     }
@@ -54,7 +55,6 @@ export const verifyToken = (
     res: Response,
     next: NextFunction
 ): void => {
-    console.log(req.headers.authorization)
     const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
