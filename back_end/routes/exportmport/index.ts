@@ -2,11 +2,10 @@ import express from "express";
 import multer from "multer";
 import csv from "csv-parser";
 import fs from "fs";
-import { PrismaClient } from "@prisma/client";
+import { db } from "../../db";
 import { Request as ExpressRequest } from "express";
 
 const router = express.Router();
-const prisma = new PrismaClient();
 const upload = multer({ dest: "uploads/" });
 
 router.post("/import/csv", upload.single("file"), async (req: ExpressRequest & { file: multer.File }, res) => {
@@ -36,13 +35,13 @@ router.post("/import/csv", upload.single("file"), async (req: ExpressRequest & {
                     recus,
                 } = row;
 
-                const filiereRecord = await prisma.filiere.upsert({
+                const filiereRecord = await db.filiere.upsert({
                     where: { nom: filiere },
                     update: {},
                     create: { nom: filiere },
                 });
 
-                const eleve = await prisma.eleve.upsert({
+                const eleve = await db.eleve.upsert({
                     where: { nomPrenom },
                     update: {
                         telephone,
@@ -65,9 +64,9 @@ router.post("/import/csv", upload.single("file"), async (req: ExpressRequest & {
 
                 const eleveId = eleve.id;
 
-                await prisma.eleveModule.deleteMany({ where: { eleveId } });
-                await prisma.eleveFourniture.deleteMany({ where: { eleveId } });
-                await prisma.recu.deleteMany({ where: { eleveId } });
+                await db.eleveModule.deleteMany({ where: { eleveId } });
+                await db.eleveFourniture.deleteMany({ where: { eleveId } });
+                await db.recu.deleteMany({ where: { eleveId } });
 
                 const parseResources = (field: string): { nom: string, prix: number, paye: number }[] => {
                     if (!field) return [];
@@ -79,26 +78,26 @@ router.post("/import/csv", upload.single("file"), async (req: ExpressRequest & {
 
                 const parsedModules = parseResources(modules);
                 for (const { nom, prix, paye } of parsedModules) {
-                    const module = await prisma.module.upsert({
+                    const module = await db.module.upsert({
                         where: { nom },
                         update: prix !== undefined ? { prix } : {},
                         create: { nom, prix },
                     });
 
-                    await prisma.eleveModule.create({
+                    await db.eleveModule.create({
                         data: { eleveId, moduleId: module.id, paye },
                     });
                 }
 
                 const parsedFournitures = parseResources(fournitures);
                 for (const { nom, prix, paye } of parsedFournitures) {
-                    const fourniture = await prisma.fourniture.upsert({
+                    const fourniture = await db.fourniture.upsert({
                         where: { nom },
                         update: prix !== undefined ? { prix } : {},
                         create: { nom, prix },
                     });
 
-                    await prisma.eleveFourniture.create({
+                    await db.eleveFourniture.create({
                         data: { eleveId, fournitureId: fourniture.id, paye },
                     });
                 }
@@ -109,7 +108,7 @@ router.post("/import/csv", upload.single("file"), async (req: ExpressRequest & {
                 });
 
                 for (const recu of parsedRecus) {
-                    await prisma.recu.create({ data: { ...recu, eleveId } });
+                    await db.recu.create({ data: { ...recu, eleveId } });
                 }
             }
 
@@ -121,7 +120,7 @@ router.post("/import/csv", upload.single("file"), async (req: ExpressRequest & {
 
 router.get("/export/csv", async (req, res) => {
 
-    const eleves = await prisma.eleve.findMany({
+    const eleves = await db.eleve.findMany({
         include: {
             filiere: true,
             modules: { include: { module: true } },
