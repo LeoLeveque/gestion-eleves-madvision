@@ -42,7 +42,7 @@ const swaggerOptions = {
         },
         security: [{ BearerAuth: [] }],
     },
-    apis: ["back_end/docs/**/*.ts"],
+    apis: ["docs/**/*.ts"],
 };
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
@@ -61,10 +61,8 @@ app.use("/eleve-fournitures", verifyToken, eleveFournitureRoutes);
 app.use("/eleve-modules", verifyToken, eleveModuleRoutes);
 app.use("/export-import", verifyToken, importExportRoutes);
 
-
-/*
-const PORT = 3000;
+const PORT = 3111;
 app.listen(PORT, () => {
     console.log(`✅ Serveur lancé sur http://localhost:${PORT}`);
 });
-*/
+

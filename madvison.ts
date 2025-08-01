@@ -24,11 +24,6 @@ async function start() {
 
     const frontendPort = await getFreePort(5173);
 
-
-    app.listen(3111, () => {
-        console.log(`✅ Serveur lancé sur http://localhost:${3111}`);
-    });
-
     const root = "gestion-eleves-front/dist";
     const port = 5173;
 
