@@ -15,6 +15,7 @@ import eleveModuleRoutes from "./routes/eleveModule";
 import importExportRoutes from "./routes/exportmport"
 import cors from "cors";
 import { verifyToken } from "./routes/auth/service";
+import path from "path";
 
 
 export const app = express();
@@ -48,6 +49,7 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/auth", authRoutes);
 
 app.use("/eleves", verifyToken, elevesRoutes);
@@ -62,9 +64,9 @@ app.use("/eleve-modules", verifyToken, eleveModuleRoutes);
 app.use("/export-import", verifyToken, importExportRoutes);
 
 
-/*
-const PORT = 3000;
+
+const PORT = 3111;
 app.listen(PORT, () => {
     console.log(`✅ Serveur lancé sur http://localhost:${PORT}`);
 });
-*/
+

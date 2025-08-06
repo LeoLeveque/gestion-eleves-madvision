@@ -1,6 +1,6 @@
 import {
     Button,
-    Form,
+    Form, Input,
     InputNumber,
     Modal,
     Select,
@@ -24,6 +24,11 @@ export const ModuleSection: React.FC<Props> = ({ localRecord, setLocalRecord }) 
     const [form] = Form.useForm();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [editingModule, setEditingModule] = useState<ModuleSuiviType | null>(null);
+
+    const [quickAddVisible, setQuickAddVisible] = useState(false);
+    const [createForm] = Form.useForm();
+    const { mutate: createModule, isLoading: creatingModule } = useCreate<Module>();
+
 
     const { data: modulesData, isLoading } = useList<Module>({
         resource: "modules",
@@ -149,11 +154,55 @@ export const ModuleSection: React.FC<Props> = ({ localRecord, setLocalRecord }) 
                             loading={isLoading}
                         />
                     </Form.Item>
+                    <Form.Item>
+                        <Button type="link" onClick={() => setQuickAddVisible(true)}>
+                            + Ajouter un nouveau module
+                        </Button>
+                    </Form.Item>
                     <Form.Item name="paye" label="Payé" rules={[{ required: true }]}>
                         <InputNumber style={{ width: "100%" }} addonAfter="Ar" />
                     </Form.Item>
                 </Form>
             </Modal>
+
+            <Modal
+                title="Nouveau module"
+                open={quickAddVisible}
+                onCancel={() => {
+                    setQuickAddVisible(false);
+                    createForm.resetFields();
+                }}
+                onOk={() => createForm.submit()}
+                confirmLoading={creatingModule}
+            >
+                <Form
+                    form={createForm}
+                    layout="vertical"
+                    onFinish={(values) => {
+                        createModule(
+                            {
+                                resource: "modules",
+                                values,
+                            },
+                            {
+                                onSuccess: () => {
+                                    createForm.resetFields();
+                                    setQuickAddVisible(false);
+                                    refetch?.();
+                                },
+                            }
+                        );
+                    }}
+                >
+                    <Form.Item name="nom" label="Nom" rules={[{ required: true }]}>
+                        <Input />
+                    </Form.Item>
+                    <Form.Item name="prix" label="Prix (Ar)" rules={[{ required: true }]}>
+                        <InputNumber style={{ width: "100%" }} />
+                    </Form.Item>
+                </Form>
+            </Modal>
+
         </>
     );
 };

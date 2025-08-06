@@ -4,6 +4,8 @@ import { Dayjs } from "dayjs";
 import type { EleveType } from "./types";
 import { useUpdate } from "@refinedev/core";
 
+
+
 type Props = {
     eleveForm: any;
     localRecord: EleveType;
@@ -20,6 +22,7 @@ export const EleveDetails: React.FC<Props> = ({
                                                   setIsEditingEleve,
                                               }) => {
     const { mutate: update } = useUpdate();
+
 
     const handleEleveSave = async () => {
         const values = await eleveForm.validateFields();

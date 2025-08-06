@@ -20,6 +20,7 @@ model Eleve {
   recus         Recu[]
   modules       EleveModule[]
   fournitures   EleveFourniture[]
+  photoUrl      String?
 }
 
 model Filiere {

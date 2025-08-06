@@ -8,6 +8,7 @@ import { EleveDetails } from "./details";
 import { RecuSection } from "./recuSection";
 import { ModuleSection } from "./moduleSection";
 import { FournitureSection } from "./fournitureSection";
+import {ElevePhoto} from "./elevePhoto";
 
 
 export const ElevesShow = () => {
@@ -33,6 +34,11 @@ export const ElevesShow = () => {
                 </>
             )}
         >
+            <ElevePhoto
+                photoUrl={localRecord.photoUrl}
+                eleveId={localRecord.id}
+                setLocalRecord={setLocalRecord}
+            />
             <EleveDetails
                 eleveForm={eleveForm}
                 localRecord={localRecord}

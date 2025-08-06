@@ -92,7 +92,30 @@ export const dataProvider: DataProvider = {
 
     getApiUrl: () => API_URL,
 
-    custom: async () => {
-        throw new Error("Not implemented");
+    custom: async ({ url, method, payload }) => {
+        try {
+            const headers: Record<string, string> = {};
+
+            if (!(payload instanceof FormData)) {
+                headers["Content-Type"] = "application/json";
+            }
+
+            const response = await axiosInstance.request({
+                url,
+                method,
+                data: payload,
+                headers,
+            });
+
+            return {
+                data: response.data,
+            };
+        } catch (error: any) {
+            console.error("Erreur API personnalisée :", error);
+            throw new Error(error?.response?.data?.message || "Erreur inconnue");
+        }
     },
+
+
+
 };

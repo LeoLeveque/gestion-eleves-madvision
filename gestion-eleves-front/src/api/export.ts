@@ -3,19 +3,15 @@ import { API_URL } from "../dataProvider";
 export const exportCsv = async () => {
     const token = localStorage.getItem("token");
 
-    const response = await fetch(
-        `${API_URL}/export-import/export/csv`,
-        {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`,
-                Accept: "text/csv",
-            },
-        }
-    );
+    const response = await fetch( `${API_URL}/export-import/export/csv`, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
 
     if (!response.ok) {
-        throw new Error("Échec de l'export CSV");
+        throw new Error("Échec de l'export");
     }
 
     const blob = await response.blob();
@@ -23,7 +19,7 @@ export const exportCsv = async () => {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "eleves.csv";
+    a.download = "eleves_export.zip";
     document.body.appendChild(a);
     a.click();
     a.remove();

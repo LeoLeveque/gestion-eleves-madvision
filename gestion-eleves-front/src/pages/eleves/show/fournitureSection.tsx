@@ -1,6 +1,7 @@
 import {
     Button,
     Form,
+    Input,
     InputNumber,
     Modal,
     Select,
@@ -24,6 +25,11 @@ export const FournitureSection: React.FC<Props> = ({ localRecord, setLocalRecord
     const [form] = Form.useForm();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [editingItem, setEditingItem] = useState<FournitureEleveType | null>(null);
+
+    const [quickAddVisible, setQuickAddVisible] = useState(false);
+    const [createForm] = Form.useForm();
+    const { mutate: createFourniture, isLoading: creatingFourniture } = useCreate<Fourniture>();
+
 
     const { data: dataList, isLoading } = useList<Fourniture>({
         resource: "fournitures",
@@ -151,11 +157,56 @@ export const FournitureSection: React.FC<Props> = ({ localRecord, setLocalRecord
                             loading={isLoading}
                         />
                     </Form.Item>
+                    <Form.Item>
+
+                        <Button type="link" onClick={() => setQuickAddVisible(true)}>
+                            + Ajouter une nouvelle fourniture
+                        </Button>
+                    </Form.Item>
                     <Form.Item name="paye" label="Payé" rules={[{ required: true }]}>
                         <InputNumber style={{ width: "100%" }} addonAfter="Ar" />
                     </Form.Item>
                 </Form>
             </Modal>
+
+            <Modal
+                title="Nouvelle fourniture"
+                open={quickAddVisible}
+                onCancel={() => {
+                    setQuickAddVisible(false);
+                    createForm.resetFields();
+                }}
+                onOk={() => createForm.submit()}
+                confirmLoading={creatingFourniture}
+            >
+                <Form
+                    form={createForm}
+                    layout="vertical"
+                    onFinish={(values) => {
+                        createFourniture(
+                            {
+                                resource: "fournitures",
+                                values,
+                            },
+                            {
+                                onSuccess: () => {
+                                    createForm.resetFields();
+                                    setQuickAddVisible(false);
+                                    refetch?.();
+                                },
+                            }
+                        );
+                    }}
+                >
+                    <Form.Item name="nom" label="Nom" rules={[{ required: true }]}>
+                        <Input />
+                    </Form.Item>
+                    <Form.Item name="prix" label="Prix (Ar)" rules={[{ required: true }]}>
+                        <InputNumber style={{ width: "100%" }} />
+                    </Form.Item>
+                </Form>
+            </Modal>
+
         </>
     );
 };

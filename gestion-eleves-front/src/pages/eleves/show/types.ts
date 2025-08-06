@@ -38,4 +38,6 @@ export type EleveType = {
     recus: RecuType[];
     modules: ModuleSuiviType[];
     fournitures: FournitureEleveType[];
+
+    photoUrl: string
 };

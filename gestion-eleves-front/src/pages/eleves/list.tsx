@@ -142,14 +142,14 @@ export const ElevesList: React.FC = () => {
                         <CreateButton resource="eleves">Créer un élève</CreateButton>
                         <input
                             type="file"
-                            accept=".csv"
+                            accept=".zip"
                             ref={fileInputRef}
                             style={{ display: "none" }}
                             onChange={handleFileChange}
                         />
 
-                        <Button onClick={handleImportClick}>Importer CSV</Button>
-                        <Button onClick={exportCsv}>Exporter CSV</Button>
+                        <Button onClick={handleImportClick}>Importer</Button>
+                        <Button onClick={exportCsv}>Exporter</Button>
 
                     </Space>
                 )}

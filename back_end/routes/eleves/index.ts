@@ -2,6 +2,10 @@ import { Router, Request, Response } from "express";
 import { db } from "../../db.js";
 import { Prisma } from "@prisma/client";
 import { getEleveComplet, ajouterFournitures, ajouterModules, ajouterRecus, supprimerRelationsEleve } from "./service";
+import { upload } from "../../middleware/uploads";
+import { UploadedFile } from "multer";
+import fs from "fs";
+import path from "path";
 
 
 const router = Router();
@@ -215,5 +219,42 @@ router.delete("/:id", async (req: Request, res: Response) => {
         res.status(404).json({ error: "Élève introuvable" });
     }
 });
+
+router.post(
+    "/:id/photo",
+    upload.single("photo"),
+    async (req: Request<{ id: string }> & { file?: UploadedFile }, res: Response) => {
+        const { id } = req.params;
+
+        if (!req.file) {
+            res.status(400).json({ error: "Aucune photo envoyée" });
+            return;
+        }
+
+        const eleve = await db.eleve.findUnique({
+            where: { id: Number(id) },
+        });
+
+        if (eleve?.photoUrl) {
+            const oldPhotoPath = path.join(__dirname, "../../uploads", path.basename(eleve.photoUrl));
+
+            fs.unlink(oldPhotoPath, (err) => {
+                res.status(500).json({ error: "⚠️ Impossible de supprimer l'ancienne photo :" + err.message});
+
+            });
+        }
+
+        const photoUrl = `/uploads/${req.file.filename}`;
+
+        const updated = await db.eleve.update({
+            where: { id: Number(id) },
+            data: { photoUrl },
+        });
+
+        res.json({ message: "Photo mise à jour", photoUrl: updated.photoUrl });
+        return;
+    }
+);
+
 
 export default router;
